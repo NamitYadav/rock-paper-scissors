@@ -1,0 +1,12 @@
+.s-heading {
+  font-size: 32px;
+  text-decoration: underline;
+}
+
+.s-player {
+  padding: 8px;
+}
+
+.s-player-name {
+  text-transform: uppercase;
+}
