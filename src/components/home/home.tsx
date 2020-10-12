@@ -2,22 +2,18 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import Score from '../score/score';
-import {
-  incrementPlayerOne,
-  incrementPlayerTwo,
-  resetScore,
-  setGameType,
-} from '../../store/actions';
+import { incrementPlayerOne, incrementPlayerTwo, resetScore } from '../../store/actions';
 import Player from '../player/player';
 import './home.css';
 import { WEAPONS, GAME_TYPE_ENUM, WEAPONS_ENUM } from '../../store/constants';
+import GameTypeSelector from '../game-type-selector/game-type-selector';
+import WeaponBtn from '../weapon-btn/weapon-btn';
 
 interface Props {
   incrementPlayerOne: { (): void };
   incrementPlayerTwo: { (): void };
   resetScore: { (): void };
   gameType: GAME_TYPE_ENUM;
-  setGameType: { (gameType: GAME_TYPE_ENUM): void };
 }
 
 class Home extends Component<Props> {
@@ -86,33 +82,13 @@ class Home extends Component<Props> {
   };
 
   render() {
-    const { gameType, setGameType } = this.props;
+    const { gameType } = this.props;
     const { playerOne, playerTwo, winner } = this.state;
     return (
       <div className='game-container'>
         <div className='game-top'>
           <div>
-            <div
-              onChange={(event: any) => {
-                setGameType(event.target.value);
-              }}>
-              <fieldset className='radio-group'>
-                <legend>Select Game Type</legend>
-                <span className='radio-item'>
-                  <input
-                    type='radio'
-                    value={GAME_TYPE_ENUM.PLAYER}
-                    name='game-type'
-                    defaultChecked
-                  />{' '}
-                  Player vs Computer
-                </span>
-                <span className='radio-item'>
-                  <input type='radio' value={GAME_TYPE_ENUM.COMPUTER} name='game-type' /> Computer
-                  vs Computer
-                </span>
-              </fieldset>
-            </div>
+            <GameTypeSelector />
             <div className='home-button-container'>
               <button type='button' className='start-button' onClick={this.startGame}>
                 START
@@ -132,25 +108,7 @@ class Home extends Component<Props> {
               <span className='inverse'>
                 <Player weapon={playerOne} />
               </span>
-              {gameType === GAME_TYPE_ENUM.PLAYER && (
-                <div className='weaponBtn-container'>
-                  <button
-                    className='weaponBtn'
-                    onClick={() => this.selectWeapon(WEAPONS_ENUM.ROCK)}>
-                    <i className='home-weapon-icon far fa-hand-rock'></i>Rock
-                  </button>
-                  <button
-                    className='weaponBtn'
-                    onClick={() => this.selectWeapon(WEAPONS_ENUM.PAPER)}>
-                    <i className='home-weapon-icon far fa-hand-paper'></i>Paper
-                  </button>
-                  <button
-                    className='weaponBtn'
-                    onClick={() => this.selectWeapon(WEAPONS_ENUM.SCISSORS)}>
-                    <i className='home-weapon-icon far fa-hand-scissors'></i>Scissor
-                  </button>
-                </div>
-              )}
+              {gameType === GAME_TYPE_ENUM.PLAYER && <WeaponBtn selectWeapon={this.selectWeapon} />}
             </div>
             <div className='player'>
               <div className='player-2'>Computer</div>
@@ -168,6 +126,6 @@ const mapStateToProps = (state: any) => {
   return { gameType: state.gameType };
 };
 
-const mapDispatchToProps = { incrementPlayerOne, incrementPlayerTwo, resetScore, setGameType };
+const mapDispatchToProps = { incrementPlayerOne, incrementPlayerTwo, resetScore };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home);

@@ -1,0 +1,16 @@
+.weaponBtn-container {
+  display: flex;
+  flex-wrap: wrap;
+  padding-top: 32px;
+}
+
+.weaponBtn {
+  width: 120px;
+  margin-bottom: 4px;
+}
+
+.home-weapon-icon {
+  margin-right: 8px;
+  -webkit-transform: scaleX(-1);
+  transform: scaleX(-1);
+}

@@ -15,16 +15,6 @@
   align-items: center;
 }
 
-.radio-group {
-  display: flex;
-  flex-direction: column;
-  border-radius: 4px;
-}
-
-.radio-item {
-  margin-bottom: 4px;
-}
-
 .player-container {
   display: flex;
   max-width: 450px;
@@ -61,23 +51,6 @@
   font-size: 18px;
   text-align: center;
   margin: 32px 0;
-}
-
-.weaponBtn-container {
-  display: flex;
-  flex-wrap: wrap;
-  padding-top: 32px;
-}
-
-.weaponBtn {
-  width: 120px;
-  margin-bottom: 4px;
-}
-
-.home-weapon-icon {
-  margin-right: 8px;
-  -webkit-transform: scaleX(-1);
-  transform: scaleX(-1);
 }
 
 .home-button-container {
