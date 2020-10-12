@@ -3,7 +3,6 @@ body {
 }
 
 .app {
-  text-align: center;
   background-color: #282c34;
   min-height: 100vh;
   display: flex;
@@ -14,9 +13,9 @@ body {
 }
 
 .app-header {
-  font-size: 48px;
+  font-size: 36px;
   font-weight: bold;
-  margin: 64px 0;
+  margin: 16px 0;
 }
 
 .app-content {

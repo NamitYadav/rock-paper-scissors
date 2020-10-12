@@ -5,16 +5,18 @@ import './score.css';
 
 const Score = (props: any) => {
   return (
-    <div className='s-container'>
-      <div className='s-heading'>Score</div>
-      <div className='s-player'>
-        <div className='s-player-name'>Player 1</div>
-        <div className='s-player-score'>{props.playerOne}</div>
-      </div>
-      <div className='s-player'>
-        <div className='s-player-name'>Computer</div>
-        <div className='s-player-score'>{props.playerTwo}</div>
-      </div>
+    <div>
+      <fieldset className='s-container'>
+        <legend>Score</legend>
+        <div className='s-player'>
+          <div className='s-player-name'>Player 1</div>
+          <div className='s-player-score'>{props.playerOne}</div>
+        </div>
+        <div className='s-player'>
+          <div className='s-player-name'>Computer</div>
+          <div className='s-player-score'>{props.playerTwo}</div>
+        </div>
+      </fieldset>
     </div>
   );
 };

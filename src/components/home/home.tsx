@@ -18,19 +18,28 @@ class Home extends Component<Props> {
     playerOne: weapons[0],
     playerTwo: weapons[0],
     winner: '',
+    gameType: 'player',
   };
 
   startGame = () => {
+    const { gameType } = this.state;
     let counter = 0;
     let gameInterval = setInterval(() => {
       counter++;
-      this.setState({
-        playerTwo: weapons[Math.floor(Math.random() * weapons.length)],
-        winner: '',
-      });
+      if (gameType === 'player') {
+        this.setState({
+          playerTwo: weapons[Math.floor(Math.random() * weapons.length)],
+          winner: '',
+        });
+      } else {
+        this.setState({
+          playerOne: weapons[Math.floor(Math.random() * weapons.length)],
+          playerTwo: weapons[Math.floor(Math.random() * weapons.length)],
+          winner: '',
+        });
+      }
       if (counter > 5) {
         clearInterval(gameInterval);
-        console.log('Home props', this.props);
         this.setState({
           winner: this.selectWinner(),
         });
@@ -39,12 +48,11 @@ class Home extends Component<Props> {
   };
 
   selectWinner = () => {
-    console.log(this.props);
     const { incrementPlayerOne, incrementPlayerTwo } = this.props;
     const { playerOne, playerTwo } = this.state;
 
     if (playerOne === playerTwo) {
-      return "Oops it's a Tie!";
+      return "It's a Tie!";
     } else if (
       (playerOne === 'rock' && playerTwo === 'scissors') ||
       (playerOne === 'scissors' && playerTwo === 'paper') ||
@@ -71,25 +79,45 @@ class Home extends Component<Props> {
     resetScore();
   };
 
+  onGameTypeChange = (event: any) => {
+    this.setState({ gameType: event.target.value });
+  };
+
   render() {
-    const { playerOne, playerTwo, winner } = this.state;
+    const { playerOne, playerTwo, winner, gameType } = this.state;
     return (
       <div className='game-container'>
+        <div onChange={this.onGameTypeChange}>
+          <fieldset className='radio-group'>
+            <legend>Select Game Type</legend>
+            <span>
+              <input type='radio' value='player' name='game-type' defaultChecked /> Player vs
+              Computer
+            </span>
+            <span>
+              <input type='radio' value='computer' name='game-type' /> Computer vs Computer
+            </span>
+          </fieldset>
+        </div>
         <div className='player-container'>
           <div className='player'>
-            <div className='player-1'>Player 1</div>
-            <span className='inverse'><Player weapon={playerOne} /></span>
-            <div className='weaponBtn-container'>
-              <button className='weaponBtn' onClick={() => this.selectWeapon('rock')}>
-                <i className='home-weapon-icon far fa-hand-rock'></i>Rock
-              </button>
-              <button className='weaponBtn' onClick={() => this.selectWeapon('paper')}>
-                <i className='home-weapon-icon far fa-hand-paper'></i>Paper
-              </button>
-              <button className='weaponBtn' onClick={() => this.selectWeapon('scissors')}>
-                <i className='home-weapon-icon far fa-hand-scissors'></i>Scissor
-              </button>
-            </div>
+            <div className='player-1'>{gameType}</div>
+            <span className='inverse'>
+              <Player weapon={playerOne} />
+            </span>
+            {gameType === 'player' && (
+              <div className='weaponBtn-container'>
+                <button className='weaponBtn' onClick={() => this.selectWeapon('rock')}>
+                  <i className='home-weapon-icon far fa-hand-rock'></i>Rock
+                </button>
+                <button className='weaponBtn' onClick={() => this.selectWeapon('paper')}>
+                  <i className='home-weapon-icon far fa-hand-paper'></i>Paper
+                </button>
+                <button className='weaponBtn' onClick={() => this.selectWeapon('scissors')}>
+                  <i className='home-weapon-icon far fa-hand-scissors'></i>Scissor
+                </button>
+              </div>
+            )}
           </div>
           <div className='player'>
             <div className='player-2'>Computer</div>

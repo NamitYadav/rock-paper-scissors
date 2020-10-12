@@ -1,15 +1,19 @@
-.game-container {
-  padding-top: 32px;
+.radio-group {
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  border-radius: 4px;
 }
 
 .player-container {
   display: flex;
+  padding-top: 32px;
+  max-width: 450px;
 }
 
 .player {
   display: flex;
   flex-direction: column;
-  margin-right: 32px;
   padding: 0 32px;
 }
 
@@ -17,8 +21,10 @@
   border-right: 1px solid #fff;
 }
 
-.player-1, .player-2 {
+.player-1,
+.player-2 {
   text-transform: uppercase;
+  font-weight: bold;
 }
 
 .inverse {
@@ -27,13 +33,11 @@
 }
 
 .winner {
-  width: 100px;
-  height: 55px;
-  margin: 10px auto;
+  height: 30px;
   color: #fff;
   font-size: 18px;
   text-align: center;
-  font-weight: bold;
+  margin: 32px 0;
 }
 
 .weaponBtn-container {
@@ -43,7 +47,8 @@
 }
 
 .weaponBtn {
-  margin-right: 8px;
+  width: 120px;
+  margin-bottom: 4px;
 }
 
 .home-weapon-icon {
@@ -68,8 +73,8 @@ button {
 }
 
 .start-button {
-  background: #3A76B7;
-  border-color: #3A76B7;
+  background: #3a76b7;
+  border-color: #3a76b7;
   margin-right: 32px;
 }
 
