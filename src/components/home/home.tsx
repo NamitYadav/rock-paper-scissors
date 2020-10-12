@@ -1,7 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { incrementPlayerOne, incrementPlayerTwo, resetScore } from '../../store/actions';
+import {
+  incrementPlayerOne,
+  incrementPlayerTwo,
+  resetScore,
+  setGameType,
+} from '../../store/actions';
 import Player from '../player/player';
 import './home.css';
 
@@ -11,6 +16,8 @@ interface Props {
   incrementPlayerOne: any;
   incrementPlayerTwo: any;
   resetScore: any;
+  gameType: string;
+  setGameType: any;
 }
 
 class Home extends Component<Props> {
@@ -18,11 +25,10 @@ class Home extends Component<Props> {
     playerOne: weapons[0],
     playerTwo: weapons[0],
     winner: '',
-    gameType: 'player',
   };
 
   startGame = () => {
-    const { gameType } = this.state;
+    const { gameType } = this.props;
     let counter = 0;
     let gameInterval = setInterval(() => {
       counter++;
@@ -79,15 +85,15 @@ class Home extends Component<Props> {
     resetScore();
   };
 
-  onGameTypeChange = (event: any) => {
-    this.setState({ gameType: event.target.value });
-  };
-
   render() {
-    const { playerOne, playerTwo, winner, gameType } = this.state;
+    const { gameType, setGameType } = this.props;
+    const { playerOne, playerTwo, winner } = this.state;
     return (
       <div className='game-container'>
-        <div onChange={this.onGameTypeChange}>
+        <div
+          onChange={(event: any) => {
+            setGameType(event.target.value);
+          }}>
           <fieldset className='radio-group'>
             <legend>Select Game Type</legend>
             <span>
@@ -98,6 +104,14 @@ class Home extends Component<Props> {
               <input type='radio' value='computer' name='game-type' /> Computer vs Computer
             </span>
           </fieldset>
+        </div>
+        <div className='home-button-container'>
+          <button type='button' className='start-button' onClick={this.startGame}>
+            START
+          </button>
+          <button type='button' className='reset-button' onClick={this.resetGame}>
+            RESET
+          </button>
         </div>
         <div className='player-container'>
           <div className='player'>
@@ -125,19 +139,15 @@ class Home extends Component<Props> {
           </div>
         </div>
         <div className='winner'>{winner || ''}</div>
-        <div className='home-button-container'>
-          <button type='button' className='start-button' onClick={this.startGame}>
-            START
-          </button>
-          <button type='button' className='reset-button' onClick={this.resetGame}>
-            RESET
-          </button>
-        </div>
       </div>
     );
   }
 }
 
-const mapDispatchToProps = { incrementPlayerOne, incrementPlayerTwo, resetScore };
+const mapStateToProps = (state: any) => {
+  return { gameType: state.gameType };
+};
 
-export default connect(null, mapDispatchToProps)(Home);
+const mapDispatchToProps = { incrementPlayerOne, incrementPlayerTwo, resetScore, setGameType };
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home);

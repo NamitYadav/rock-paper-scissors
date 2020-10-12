@@ -11,3 +11,8 @@ export const incrementPlayerTwo = () => ({
 export const resetScore = () => ({
   type: ACTIONS.SCORE.RESET,
 });
+
+export const setGameType = (gameType: string) => ({
+  type: ACTIONS.GAME_TYPE,
+  gameType,
+});

@@ -7,7 +7,6 @@
 
 .player-container {
   display: flex;
-  padding-top: 32px;
   max-width: 450px;
 }
 
@@ -15,6 +14,7 @@
   display: flex;
   flex-direction: column;
   padding: 0 32px;
+  width: 200px;
 }
 
 .player:first-child {
@@ -57,6 +57,10 @@
   transform: scaleX(-1);
 }
 
+.home-button-container {
+  margin: 32px 0;
+}
+
 button {
   padding: 5px 8px;
   border-radius: 8px;
@@ -75,7 +79,7 @@ button {
 .start-button {
   background: #3a76b7;
   border-color: #3a76b7;
-  margin-right: 32px;
+  margin-right: 8px;
 }
 
 .reset-button {

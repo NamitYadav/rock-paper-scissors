@@ -6,6 +6,7 @@ const ACTIONS = {
     },
     RESET: 'Actions.Score.Reset',
   },
+  GAME_TYPE: 'Actions.GameType',
 };
 
 export default ACTIONS;
