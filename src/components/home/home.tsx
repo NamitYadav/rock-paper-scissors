@@ -9,21 +9,20 @@ import {
 } from '../../store/actions';
 import Player from '../player/player';
 import './home.css';
-
-const weapons = ['rock', 'paper', 'scissors'];
+import { WEAPONS, GAME_TYPE_ENUM, WEAPONS_ENUM } from '../../store/constants';
 
 interface Props {
-  incrementPlayerOne: any;
-  incrementPlayerTwo: any;
-  resetScore: any;
-  gameType: string;
-  setGameType: any;
+  incrementPlayerOne: { (): void };
+  incrementPlayerTwo: { (): void };
+  resetScore: { (): void };
+  gameType: GAME_TYPE_ENUM;
+  setGameType: { (gameType: GAME_TYPE_ENUM): void };
 }
 
 class Home extends Component<Props> {
   state = {
-    playerOne: weapons[0],
-    playerTwo: weapons[0],
+    playerOne: WEAPONS[0],
+    playerTwo: WEAPONS[0],
     winner: '',
   };
 
@@ -32,15 +31,15 @@ class Home extends Component<Props> {
     let counter = 0;
     let gameInterval = setInterval(() => {
       counter++;
-      if (gameType === 'player') {
+      if (gameType === GAME_TYPE_ENUM.PLAYER) {
         this.setState({
-          playerTwo: weapons[Math.floor(Math.random() * weapons.length)],
+          playerTwo: WEAPONS[Math.floor(Math.random() * WEAPONS.length)],
           winner: '',
         });
       } else {
         this.setState({
-          playerOne: weapons[Math.floor(Math.random() * weapons.length)],
-          playerTwo: weapons[Math.floor(Math.random() * weapons.length)],
+          playerOne: WEAPONS[Math.floor(Math.random() * WEAPONS.length)],
+          playerTwo: WEAPONS[Math.floor(Math.random() * WEAPONS.length)],
           winner: '',
         });
       }
@@ -60,9 +59,9 @@ class Home extends Component<Props> {
     if (playerOne === playerTwo) {
       return "It's a Tie!";
     } else if (
-      (playerOne === 'rock' && playerTwo === 'scissors') ||
-      (playerOne === 'scissors' && playerTwo === 'paper') ||
-      (playerOne === 'paper' && playerTwo === 'rock')
+      (playerOne === WEAPONS_ENUM.ROCK && playerTwo === WEAPONS_ENUM.SCISSORS) ||
+      (playerOne === WEAPONS_ENUM.SCISSORS && playerTwo === WEAPONS_ENUM.PAPER) ||
+      (playerOne === WEAPONS_ENUM.PAPER && playerTwo === WEAPONS_ENUM.ROCK)
     ) {
       incrementPlayerOne();
       return 'Player One Wins!';
@@ -97,11 +96,12 @@ class Home extends Component<Props> {
           <fieldset className='radio-group'>
             <legend>Select Game Type</legend>
             <span>
-              <input type='radio' value='player' name='game-type' defaultChecked /> Player vs
-              Computer
+              <input type='radio' value={GAME_TYPE_ENUM.PLAYER} name='game-type' defaultChecked />{' '}
+              Player vs Computer
             </span>
             <span>
-              <input type='radio' value='computer' name='game-type' /> Computer vs Computer
+              <input type='radio' value={GAME_TYPE_ENUM.COMPUTER} name='game-type' /> Computer vs
+              Computer
             </span>
           </fieldset>
         </div>
@@ -119,15 +119,17 @@ class Home extends Component<Props> {
             <span className='inverse'>
               <Player weapon={playerOne} />
             </span>
-            {gameType === 'player' && (
+            {gameType === GAME_TYPE_ENUM.PLAYER && (
               <div className='weaponBtn-container'>
-                <button className='weaponBtn' onClick={() => this.selectWeapon('rock')}>
+                <button className='weaponBtn' onClick={() => this.selectWeapon(WEAPONS_ENUM.ROCK)}>
                   <i className='home-weapon-icon far fa-hand-rock'></i>Rock
                 </button>
-                <button className='weaponBtn' onClick={() => this.selectWeapon('paper')}>
+                <button className='weaponBtn' onClick={() => this.selectWeapon(WEAPONS_ENUM.PAPER)}>
                   <i className='home-weapon-icon far fa-hand-paper'></i>Paper
                 </button>
-                <button className='weaponBtn' onClick={() => this.selectWeapon('scissors')}>
+                <button
+                  className='weaponBtn'
+                  onClick={() => this.selectWeapon(WEAPONS_ENUM.SCISSORS)}>
                   <i className='home-weapon-icon far fa-hand-scissors'></i>Scissor
                 </button>
               </div>

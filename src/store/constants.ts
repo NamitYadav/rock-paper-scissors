@@ -1,4 +1,4 @@
-const ACTIONS = {
+export const ACTIONS = {
   SCORE: {
     INCREMENT: {
       PLAYER_ONE: 'Actions.Score.Increment.PlayerOne',
@@ -6,7 +6,18 @@ const ACTIONS = {
     },
     RESET: 'Actions.Score.Reset',
   },
-  GAME_TYPE: 'Actions.GameType',
+  GAME_TYPE_ENUM: 'Actions.GameType',
 };
 
-export default ACTIONS;
+export enum WEAPONS_ENUM {
+  ROCK = 'rock',
+  PAPER = 'paper',
+  SCISSORS = 'scissors',
+}
+
+export const WEAPONS = [WEAPONS_ENUM.ROCK, WEAPONS_ENUM.PAPER, WEAPONS_ENUM.SCISSORS];
+
+export enum GAME_TYPE_ENUM {
+  PLAYER = 'player',
+  COMPUTER = 'computer',
+}

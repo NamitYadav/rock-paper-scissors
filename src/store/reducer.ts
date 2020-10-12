@@ -1,9 +1,9 @@
-import ACTIONS from './constants';
+import { ACTIONS, GAME_TYPE_ENUM } from './constants';
 
 const initialState = () => ({
   playerOne: 0,
   playerTwo: 0,
-  gameType: 'player',
+  gameType: GAME_TYPE_ENUM.PLAYER,
 });
 
 const rootReducer = (state = initialState(), action: any) => {
@@ -18,7 +18,7 @@ const rootReducer = (state = initialState(), action: any) => {
         playerOne: 0,
         playerTwo: 0,
       };
-    case ACTIONS.GAME_TYPE:
+    case ACTIONS.GAME_TYPE_ENUM:
       return { ...state, gameType: action.gameType };
     default:
       return state;

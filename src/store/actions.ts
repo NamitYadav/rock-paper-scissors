@@ -1,4 +1,4 @@
-import ACTIONS from './constants';
+import { ACTIONS } from './constants';
 
 export const incrementPlayerOne = () => ({
   type: ACTIONS.SCORE.INCREMENT.PLAYER_ONE,
@@ -13,6 +13,6 @@ export const resetScore = () => ({
 });
 
 export const setGameType = (gameType: string) => ({
-  type: ACTIONS.GAME_TYPE,
+  type: ACTIONS.GAME_TYPE_ENUM,
   gameType,
 });
