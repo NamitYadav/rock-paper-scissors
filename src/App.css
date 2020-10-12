@@ -23,4 +23,5 @@ body {
   justify-content: space-evenly;
   flex-wrap: wrap;
   width: 100%;
+  max-width: 800px;
 }

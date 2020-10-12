@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
+import Score from '../score/score';
 import {
   incrementPlayerOne,
   incrementPlayerTwo,
@@ -89,58 +90,75 @@ class Home extends Component<Props> {
     const { playerOne, playerTwo, winner } = this.state;
     return (
       <div className='game-container'>
-        <div
-          onChange={(event: any) => {
-            setGameType(event.target.value);
-          }}>
-          <fieldset className='radio-group'>
-            <legend>Select Game Type</legend>
-            <span>
-              <input type='radio' value={GAME_TYPE_ENUM.PLAYER} name='game-type' defaultChecked />{' '}
-              Player vs Computer
-            </span>
-            <span>
-              <input type='radio' value={GAME_TYPE_ENUM.COMPUTER} name='game-type' /> Computer vs
-              Computer
-            </span>
-          </fieldset>
-        </div>
-        <div className='home-button-container'>
-          <button type='button' className='start-button' onClick={this.startGame}>
-            START
-          </button>
-          <button type='button' className='reset-button' onClick={this.resetGame}>
-            RESET
-          </button>
-        </div>
-        <div className='player-container'>
-          <div className='player'>
-            <div className='player-1'>{gameType}</div>
-            <span className='inverse'>
-              <Player weapon={playerOne} />
-            </span>
-            {gameType === GAME_TYPE_ENUM.PLAYER && (
-              <div className='weaponBtn-container'>
-                <button className='weaponBtn' onClick={() => this.selectWeapon(WEAPONS_ENUM.ROCK)}>
-                  <i className='home-weapon-icon far fa-hand-rock'></i>Rock
-                </button>
-                <button className='weaponBtn' onClick={() => this.selectWeapon(WEAPONS_ENUM.PAPER)}>
-                  <i className='home-weapon-icon far fa-hand-paper'></i>Paper
-                </button>
-                <button
-                  className='weaponBtn'
-                  onClick={() => this.selectWeapon(WEAPONS_ENUM.SCISSORS)}>
-                  <i className='home-weapon-icon far fa-hand-scissors'></i>Scissor
-                </button>
-              </div>
-            )}
+        <div className='game-top'>
+          <div>
+            <div
+              onChange={(event: any) => {
+                setGameType(event.target.value);
+              }}>
+              <fieldset className='radio-group'>
+                <legend>Select Game Type</legend>
+                <span className='radio-item'>
+                  <input
+                    type='radio'
+                    value={GAME_TYPE_ENUM.PLAYER}
+                    name='game-type'
+                    defaultChecked
+                  />{' '}
+                  Player vs Computer
+                </span>
+                <span className='radio-item'>
+                  <input type='radio' value={GAME_TYPE_ENUM.COMPUTER} name='game-type' /> Computer
+                  vs Computer
+                </span>
+              </fieldset>
+            </div>
+            <div className='home-button-container'>
+              <button type='button' className='start-button' onClick={this.startGame}>
+                START
+              </button>
+              <button type='button' className='reset-button' onClick={this.resetGame}>
+                RESET
+              </button>
+            </div>
           </div>
-          <div className='player'>
-            <div className='player-2'>Computer</div>
-            <Player weapon={playerTwo} />
-          </div>
+          <Score />
         </div>
-        <div className='winner'>{winner || ''}</div>
+
+        <div className='game-bottom'>
+          <div className='player-container'>
+            <div className='player'>
+              <div className='player-1'>{gameType}</div>
+              <span className='inverse'>
+                <Player weapon={playerOne} />
+              </span>
+              {gameType === GAME_TYPE_ENUM.PLAYER && (
+                <div className='weaponBtn-container'>
+                  <button
+                    className='weaponBtn'
+                    onClick={() => this.selectWeapon(WEAPONS_ENUM.ROCK)}>
+                    <i className='home-weapon-icon far fa-hand-rock'></i>Rock
+                  </button>
+                  <button
+                    className='weaponBtn'
+                    onClick={() => this.selectWeapon(WEAPONS_ENUM.PAPER)}>
+                    <i className='home-weapon-icon far fa-hand-paper'></i>Paper
+                  </button>
+                  <button
+                    className='weaponBtn'
+                    onClick={() => this.selectWeapon(WEAPONS_ENUM.SCISSORS)}>
+                    <i className='home-weapon-icon far fa-hand-scissors'></i>Scissor
+                  </button>
+                </div>
+              )}
+            </div>
+            <div className='player'>
+              <div className='player-2'>Computer</div>
+              <Player weapon={playerTwo} />
+            </div>
+          </div>
+          <div className='winner'>{winner || ''}</div>
+        </div>
       </div>
     );
   }

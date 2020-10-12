@@ -13,14 +13,14 @@ const Score = (props: Props) => {
   return (
     <div>
       <fieldset className='s-container'>
-        <legend>Score</legend>
+        <legend>Score Board</legend>
         <div className='s-player'>
-          <div className='s-player-name'>Player 1</div>
-          <div className='s-player-score'>{props.playerOne}</div>
+          <span className='s-player-name'>Player 1: </span>
+          <span className='s-player-score'>{props.playerOne}</span>
         </div>
         <div className='s-player'>
-          <div className='s-player-name'>Player 2</div>
-          <div className='s-player-score'>{props.playerTwo}</div>
+          <span className='s-player-name'>Player 2: </span>
+          <span className='s-player-score'>{props.playerTwo}</span>
         </div>
       </fieldset>
     </div>
