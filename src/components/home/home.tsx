@@ -2,7 +2,13 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import Score from '../score/score';
-import { incrementPlayerOne, incrementPlayerTwo, resetScore } from '../../store/actions';
+import {
+  incrementPlayerOne,
+  incrementPlayerTwo,
+  resetScore,
+  changePlayerOneWeapon,
+  changePlayerTwoWeapon,
+} from '../../store/actions';
 import Player from '../player/player';
 import './home.css';
 import { WEAPONS, GAME_TYPE_ENUM, WEAPONS_ENUM } from '../../store/constants';
@@ -10,55 +16,50 @@ import GameTypeSelector from '../game-type-selector/game-type-selector';
 import WeaponBtn from '../weapon-btn/weapon-btn';
 
 interface Props {
+  gameType: GAME_TYPE_ENUM;
+  playerOneWeapon: WEAPONS_ENUM;
+  playerTwoWeapon: WEAPONS_ENUM;
   incrementPlayerOne: { (): void };
   incrementPlayerTwo: { (): void };
   resetScore: { (): void };
-  gameType: GAME_TYPE_ENUM;
+  changePlayerOneWeapon: { (weapon: WEAPONS_ENUM): void };
+  changePlayerTwoWeapon: { (weapon: WEAPONS_ENUM): void };
 }
 
 class Home extends Component<Props> {
   state = {
-    playerOne: WEAPONS[0],
-    playerTwo: WEAPONS[0],
     winner: '',
   };
 
   startGame = () => {
-    const { gameType } = this.props;
+    const { gameType, changePlayerOneWeapon, changePlayerTwoWeapon } = this.props;
     let counter = 0;
     let gameInterval = setInterval(() => {
       counter++;
       if (gameType === GAME_TYPE_ENUM.PLAYER) {
-        this.setState({
-          playerTwo: WEAPONS[Math.floor(Math.random() * WEAPONS.length)],
-          winner: '',
-        });
+        changePlayerTwoWeapon(WEAPONS[Math.floor(Math.random() * WEAPONS.length)]);
+        this.setState({ winner: '' });
       } else {
-        this.setState({
-          playerOne: WEAPONS[Math.floor(Math.random() * WEAPONS.length)],
-          playerTwo: WEAPONS[Math.floor(Math.random() * WEAPONS.length)],
-          winner: '',
-        });
+        changePlayerOneWeapon(WEAPONS[Math.floor(Math.random() * WEAPONS.length)]);
+        changePlayerTwoWeapon(WEAPONS[Math.floor(Math.random() * WEAPONS.length)]);
+        this.setState({ winner: '' });
       }
       if (counter > 5) {
         clearInterval(gameInterval);
-        this.setState({
-          winner: this.selectWinner(),
-        });
+        this.setState({ winner: this.selectWinner() });
       }
     }, 100);
   };
 
   selectWinner = () => {
-    const { incrementPlayerOne, incrementPlayerTwo } = this.props;
-    const { playerOne, playerTwo } = this.state;
+    const { incrementPlayerOne, incrementPlayerTwo, playerOneWeapon, playerTwoWeapon } = this.props;
 
-    if (playerOne === playerTwo) {
+    if (playerOneWeapon === playerTwoWeapon) {
       return "It's a Tie!";
     } else if (
-      (playerOne === WEAPONS_ENUM.ROCK && playerTwo === WEAPONS_ENUM.SCISSORS) ||
-      (playerOne === WEAPONS_ENUM.SCISSORS && playerTwo === WEAPONS_ENUM.PAPER) ||
-      (playerOne === WEAPONS_ENUM.PAPER && playerTwo === WEAPONS_ENUM.ROCK)
+      (playerOneWeapon === WEAPONS_ENUM.ROCK && playerTwoWeapon === WEAPONS_ENUM.SCISSORS) ||
+      (playerOneWeapon === WEAPONS_ENUM.SCISSORS && playerTwoWeapon === WEAPONS_ENUM.PAPER) ||
+      (playerOneWeapon === WEAPONS_ENUM.PAPER && playerTwoWeapon === WEAPONS_ENUM.ROCK)
     ) {
       incrementPlayerOne();
       return 'Player One Wins!';
@@ -69,10 +70,9 @@ class Home extends Component<Props> {
   };
 
   selectWeapon = (weapon: any) => {
-    this.setState({
-      playerOne: weapon,
-      winner: '',
-    });
+    const { changePlayerOneWeapon } = this.props;
+    changePlayerOneWeapon(weapon);
+    this.setState({ winner: '' });
   };
 
   resetGame = () => {
@@ -82,8 +82,8 @@ class Home extends Component<Props> {
   };
 
   render() {
-    const { gameType } = this.props;
-    const { playerOne, playerTwo, winner } = this.state;
+    const { gameType, playerOneWeapon, playerTwoWeapon } = this.props;
+    const { winner } = this.state;
     return (
       <div className='game-container'>
         <div className='game-top'>
@@ -106,13 +106,13 @@ class Home extends Component<Props> {
             <div className='player'>
               <div className='player-1'>{gameType}</div>
               <span className='inverse'>
-                <Player weapon={playerOne} />
+                <Player weapon={playerOneWeapon} />
               </span>
               {gameType === GAME_TYPE_ENUM.PLAYER && <WeaponBtn selectWeapon={this.selectWeapon} />}
             </div>
             <div className='player'>
               <div className='player-2'>Computer</div>
-              <Player weapon={playerTwo} />
+              <Player weapon={playerTwoWeapon} />
             </div>
           </div>
           <div className='winner'>{winner || ''}</div>
@@ -123,9 +123,19 @@ class Home extends Component<Props> {
 }
 
 const mapStateToProps = (state: any) => {
-  return { gameType: state.gameType };
+  return {
+    gameType: state.gameType,
+    playerOneWeapon: state.playerOneWeapon,
+    playerTwoWeapon: state.playerTwoWeapon,
+  };
 };
 
-const mapDispatchToProps = { incrementPlayerOne, incrementPlayerTwo, resetScore };
+const mapDispatchToProps = {
+  incrementPlayerOne,
+  incrementPlayerTwo,
+  resetScore,
+  changePlayerOneWeapon,
+  changePlayerTwoWeapon,
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home);
