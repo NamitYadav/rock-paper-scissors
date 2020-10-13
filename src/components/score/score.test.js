@@ -1,12 +1,12 @@
-import { render } from '@testing-library/react';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 import { unmountComponentAtNode } from 'react-dom';
 
-import App from './App';
-import rootReducer from './store/reducer';
+import Score from './score';
+import rootReducer from '../../store/reducer';
+import { render } from '@testing-library/react';
 
 let container = null;
 beforeEach(() => {
@@ -27,18 +27,20 @@ const store = createStore(rootReducer);
 it('renders without crashing', () => {
   ReactDOM.render(
     <Provider store={store}>
-      <App />
+      <Score />
     </Provider>,
     container,
   );
 });
 
-test('renders app header', () => {
+test('renders two players', () => {
   const { getByText } = render(
     <Provider store={store}>
-      <App />
+      <Score />
     </Provider>,
   );
-  const linkElement = getByText(/Rock Paper Scissors/i);
-  expect(linkElement).toBeInTheDocument();
+  const linkElement1 = getByText(/Player 1/i);
+  const linkElement2 = getByText(/Player 2/i);
+  expect(linkElement1).toBeInTheDocument();
+  expect(linkElement2).toBeInTheDocument();
 });

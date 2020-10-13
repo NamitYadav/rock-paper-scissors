@@ -1,12 +1,11 @@
-import { render } from '@testing-library/react';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 import { unmountComponentAtNode } from 'react-dom';
 
-import App from './App';
-import rootReducer from './store/reducer';
+import Home from './home';
+import rootReducer from '../../store/reducer';
 
 let container = null;
 beforeEach(() => {
@@ -27,18 +26,8 @@ const store = createStore(rootReducer);
 it('renders without crashing', () => {
   ReactDOM.render(
     <Provider store={store}>
-      <App />
+      <Home />
     </Provider>,
     container,
   );
-});
-
-test('renders app header', () => {
-  const { getByText } = render(
-    <Provider store={store}>
-      <App />
-    </Provider>,
-  );
-  const linkElement = getByText(/Rock Paper Scissors/i);
-  expect(linkElement).toBeInTheDocument();
 });

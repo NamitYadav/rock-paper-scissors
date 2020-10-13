@@ -1,12 +1,14 @@
-import { render } from '@testing-library/react';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 import { unmountComponentAtNode } from 'react-dom';
 
-import App from './App';
-import rootReducer from './store/reducer';
+import GameTypeSelector from './game-type-selector';
+import rootReducer from '../../store/reducer';
+import { render } from '@testing-library/react';
+
+const store = createStore(rootReducer);
 
 let container = null;
 beforeEach(() => {
@@ -22,23 +24,24 @@ afterEach(() => {
   container = null;
 });
 
-const store = createStore(rootReducer);
-
 it('renders without crashing', () => {
   ReactDOM.render(
     <Provider store={store}>
-      <App />
+      <GameTypeSelector />
     </Provider>,
     container,
   );
 });
 
-test('renders app header', () => {
+test('renders game type options', () => {
   const { getByText } = render(
     <Provider store={store}>
-      <App />
+      <GameTypeSelector />
     </Provider>,
   );
-  const linkElement = getByText(/Rock Paper Scissors/i);
-  expect(linkElement).toBeInTheDocument();
+  const linkElement1 = getByText(/Player vs Computer/i);
+  expect(linkElement1).toBeInTheDocument();
+
+  const linkElement2 = getByText(/Computer vs Computer/i);
+  expect(linkElement2).toBeInTheDocument();
 });

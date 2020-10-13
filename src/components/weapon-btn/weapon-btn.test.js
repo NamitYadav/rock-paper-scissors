@@ -1,12 +1,12 @@
-import { render } from '@testing-library/react';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 import { unmountComponentAtNode } from 'react-dom';
 
-import App from './App';
-import rootReducer from './store/reducer';
+import WeaponBtn from './weapon-btn';
+import rootReducer from '../../store/reducer';
+import { render } from '@testing-library/react';
 
 let container = null;
 beforeEach(() => {
@@ -27,18 +27,23 @@ const store = createStore(rootReducer);
 it('renders without crashing', () => {
   ReactDOM.render(
     <Provider store={store}>
-      <App />
+      <WeaponBtn />
     </Provider>,
     container,
   );
 });
 
-test('renders app header', () => {
+test('renders three weapons', () => {
   const { getByText } = render(
     <Provider store={store}>
-      <App />
+      <WeaponBtn />
     </Provider>,
   );
-  const linkElement = getByText(/Rock Paper Scissors/i);
-  expect(linkElement).toBeInTheDocument();
+  const linkElement1 = getByText(/Rock/i);
+  const linkElement2 = getByText(/Paper/i);
+  const linkElement3 = getByText(/Scissors/i);
+
+  expect(linkElement1).toBeInTheDocument();
+  expect(linkElement2).toBeInTheDocument();
+  expect(linkElement3).toBeInTheDocument();
 });

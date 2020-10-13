@@ -18,7 +18,7 @@
 .player-container {
   display: flex;
   max-width: 450px;
-  padding-top: 16px;
+  padding-top: 48px;
 }
 
 .player {
@@ -50,7 +50,6 @@
   color: #fff;
   font-size: 18px;
   text-align: center;
-  margin: 32px 0;
 }
 
 .home-button-container {

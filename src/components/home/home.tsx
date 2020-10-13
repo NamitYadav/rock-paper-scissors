@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import Score from '../score/score';
+import './home.css';
 import {
   incrementPlayerOne,
   incrementPlayerTwo,
@@ -9,9 +9,9 @@ import {
   changePlayerOneWeapon,
   changePlayerTwoWeapon,
 } from '../../store/actions';
-import Player from '../player/player';
-import './home.css';
 import { WEAPONS, GAME_TYPE_ENUM, WEAPONS_ENUM } from '../../store/constants';
+import Score from '../score/score';
+import Player from '../player/player';
 import GameTypeSelector from '../game-type-selector/game-type-selector';
 import WeaponBtn from '../weapon-btn/weapon-btn';
 
@@ -89,14 +89,6 @@ class Home extends Component<Props> {
         <div className='game-top'>
           <div>
             <GameTypeSelector />
-            <div className='home-button-container'>
-              <button type='button' className='start-button' onClick={this.startGame}>
-                START
-              </button>
-              <button type='button' className='reset-button' onClick={this.resetGame}>
-                RESET
-              </button>
-            </div>
           </div>
           <Score />
         </div>
@@ -114,6 +106,14 @@ class Home extends Component<Props> {
               <div className='player-2'>Computer</div>
               <Player weapon={playerTwoWeapon} />
             </div>
+          </div>
+          <div className='home-button-container'>
+            <button type='button' className='start-button' onClick={this.startGame}>
+              START
+            </button>
+            <button type='button' className='reset-button' onClick={this.resetGame}>
+              RESET
+            </button>
           </div>
           <div className='winner'>{winner || ''}</div>
         </div>

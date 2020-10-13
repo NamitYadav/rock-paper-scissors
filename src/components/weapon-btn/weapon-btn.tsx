@@ -19,7 +19,7 @@ const WeaponBtn = ({ selectWeapon }: Props) => (
         <i className='home-weapon-icon far fa-hand-paper'></i>Paper
       </button>
       <button className='weaponBtn' onClick={() => selectWeapon(WEAPONS_ENUM.SCISSORS)}>
-        <i className='home-weapon-icon far fa-hand-scissors'></i>Scissor
+        <i className='home-weapon-icon far fa-hand-scissors'></i>Scissors
       </button>
     </div>
   </>
