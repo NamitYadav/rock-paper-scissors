@@ -53,7 +53,7 @@ h1 {
 fieldset {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 8px;
   margin: 0;
   border: 1px solid var(--border);
   border-radius: 4px;
@@ -70,6 +70,14 @@ caption,
 
 input {
   accent-color: var(--accent);
+}
+
+/* 20px circles 8px apart clear the 24px target-size minimum (WCAG 2.5.8). */
+input[type='radio'] {
+  width: 20px;
+  height: 20px;
+  margin: 0;
+  vertical-align: -4px;
 }
 
 .score {
